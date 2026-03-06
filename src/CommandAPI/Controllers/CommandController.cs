@@ -1,3 +1,5 @@
+using CommandAPI.Data;
+using CommandAPI.Models;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,29 @@ namespace CommandAPI.Controllers
     [ApiController]
     public class CommandController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly ICommandAPIRepo _repository;
+        public CommandController(ICommandAPIRepo repository)
         {
-            return new string[] { "Hello", "World" };
+            _repository = repository;
         }
 
-        [HttpGet("/welcome")]
-        public string GetString()
+        [HttpGet]
+        public ActionResult<IEnumerable<Commands>> GetAllCommands()
         {
-            return "Hello World, Welcome to CommandAPI";
+            var commandItems = _repository.GetAllCommands();
+            return Ok(commandItems);
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<Commands> GetCommandById(int id)
+        {
+            var commandItem = _repository.GetCommandById(id);
+            if (commandItem != null)
+            {
+                return Ok(commandItem);
+            }
+            return NotFound();
+        }
+
     }
 }
