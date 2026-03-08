@@ -1,3 +1,4 @@
+using CommandAPI.Dtos;
 using CommandAPI.Models;
 
 namespace CommandAPI.Data
