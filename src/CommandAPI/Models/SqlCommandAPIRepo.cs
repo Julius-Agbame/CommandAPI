@@ -29,7 +29,12 @@ namespace CommandAPI.Models
 
         public void DeleteCommand(Commands cmd)
         {
-            throw new NotImplementedException();
+            if(cmd == null)
+            {
+                throw new ArgumentNullException(nameof(cmd));
+            }
+            _context.CommandItems.Remove(cmd);
+             
         }
 
         public IEnumerable<Commands> GetAllCommands()
@@ -49,7 +54,6 @@ namespace CommandAPI.Models
 
         public void UpdateCommand(Commands cmd)
         {
-            throw new NotImplementedException();
         }
     }
 }
